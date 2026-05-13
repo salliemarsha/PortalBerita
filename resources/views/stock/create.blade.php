@@ -2,40 +2,25 @@
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
         <h1 class="text-2xl font-semibold text-gray-800 mb-6">
-            Tambah Produk
+            Tambah Stok
         </h1>
 
         <div class="bg-white shadow rounded-xl p-6">
 
-            <form method="POST" action="{{ route('products.store') }}" class="space-y-5">
+            <form method="POST" action="{{ route('stock.store') }}" class="space-y-5">
                 @csrf
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">
-                        Nama Produk
+                        Produk
                     </label>
 
-                    <input type="text"
-                           name="name"
-                           value="{{ old('name') }}"
-                           class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
-
-                    @error('name')
-                        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                        Kategori
-                    </label>
-
-                    <select name="category_id"
+                    <select name="product_id"
                             class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
 
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}">
-                                {{ $category->name }}
+                        @foreach($products as $product)
+                            <option value="{{ $product->id }}">
+                                {{ $product->name }}
                             </option>
                         @endforeach
 
@@ -44,29 +29,31 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">
-                        Stok
+                        Jenis
                     </label>
 
-                    <input type="number"
-                           name="stock"
-                           value="{{ old('stock') }}"
-                           class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
+                    <select name="type"
+                            class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
+
+                        <option value="masuk">Stok Masuk</option>
+                        <option value="keluar">Stok Keluar</option>
+
+                    </select>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">
-                        Harga
+                        Jumlah
                     </label>
 
                     <input type="number"
-                           name="price"
-                           value="{{ old('price') }}"
+                           name="quantity"
                            class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
                 </div>
 
                 <div class="flex justify-end gap-3">
 
-                    <a href="{{ route('products.index') }}"
+                    <a href="{{ route('stock.index') }}"
                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
                         Batal
                     </a>
