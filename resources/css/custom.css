@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+body {
+    background: red !important;
+}
 
 * {
     box-sizing: border-box;
@@ -19,39 +19,35 @@ body {
 
 .dashboard-container {
     position: relative;
-    width: 700px;
-    height: 420px;
+    width: 550px;
     background: #fff;
     border-radius: 15px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    transition: 0.3s ease;
 }
 
 .dashboard-panel {
-    position: absolute;
-    width: 50%;
-    height: 100%;
     padding: 30px;
-    top: 0;
-    transition: 0.5s ease;
+    transition: 0.3s ease;
 }
 
 .dashboard-panel.login {
-    left: 0;
+    display: block;
     z-index: 2;
 }
 
 .dashboard-panel.register {
-    left: 100%;
+    display: none;
     z-index: 2;
 }
 
-.dashboard-container.active .login {
-    left: -50%;
+.dashboard-container.active .dashboard-panel.login {
+    display: none;
 }
 
-.dashboard-container.active .register {
-    left: 50%;
+.dashboard-container.active .dashboard-panel.register {
+    display: block;
 }
 
 .dashboard-header h1 {
@@ -60,6 +56,7 @@ body {
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 22px;
 }
 
@@ -76,7 +73,7 @@ body {
 }
 
 .dashboard-group input {
-    width: 100%;
+    width: 93%;
     padding: 14px 16px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
@@ -93,7 +90,7 @@ body {
 }
 
 .dashboard-group button {
-    width: 100%;
+    width: 93%;
     padding: 14px;
     background-color: #4F46E5;
     color: #fff;
@@ -104,58 +101,88 @@ body {
     transition: 0.3s ease;
 }
 
-.dashboard-group button:hover {
+.dashboard-group button-hover {
     background: #6366F1;
+}
+
+.register input {
+    width: 100%;
+}
+
+.register button {
+    width: 100%;
 }
 
 .switch-panel {
     position: absolute;
-    right: 0;
     top: 0;
-    width: 50%;
+    right: 0;
+    width: 50px;
     height: 100%;
-    background: linear-gradient(135deg, #6366F1, #4F46E5);
+    background-color: #4F46E5;
     color: #fff;
     display: flex;
     justify-content: center;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-weight: 600;
+    font-size: 14px;
     align-items: center;
-    flex-direction: column;
-    transition: 0.5s ease;
-    z-index: 5;
+    cursor: pointer;
+    transition: 0.3s ease;
+    z-index: 1;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.switch-panel:hover {
+    background-color: #6366F1;
 }
 
 .dashboard-container.active .switch-panel {
-    right: 50%;
+    right: 100%;
 }
 
-.switch-panel button {
-    margin-top: 10px;
-    padding: 10px 20px;
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 35px;
+    height: 35px;
+    background-color: #6366F1;
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    background: #fff;
-    color: #4F46E5;
+    border-radius: 50%;
+    font-size: 22px;
+    font-weight: bold;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     cursor: pointer;
-    font-weight: 600;
+    z-index: 3;
 }
 
-.switch-panel button:hover {
-    background: #eee;
+.dashboard-container.active .close-btn {
+    display: flex;
 }
 
 @media (max-width: 768px) {
     .dashboard-container {
         width: 90%;
-        height: auto;
+        padding: 20px;
     }
 
-    .dashboard-panel {
-        position: relative;
-        width: 100%;
-        height: auto;
+    .dashboard-header h1 {
+        font-size: 22px;
     }
 
     .switch-panel {
-        display: none;
+        width: 60px;
+        font-size: 12px;
+    }
+
+    .dashboard-group input, .dashboard-group button {
+        font-size: 13px;
+        padding: 12px;
     }
 }
