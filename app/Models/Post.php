@@ -5,12 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo; 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Post extends Model
 {
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['user_id', 'category_id', 'title', 'slug', 'image', 'body'];
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
