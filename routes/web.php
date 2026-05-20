@@ -5,8 +5,16 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController; 
+use App\Http\Middleware\IsAdmin;
+use App\Http\Controllers\CommentController;
 
-Route::get('/', [WelcomeController::class, 'index'])->name('home');
+Route::middleware(['auth', IsAdmin::class])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+Route::get('/', [WelcomeController::class, 'index'])->name('posts.show_public');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -18,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('categories', CategoryController::class);
     Route::resource('posts', PostController::class);
+    Route::post('/posts/{postId}/comments', [CommentController::class, 'store'])->name('comments.store');
 });
 
 require __DIR__.'/auth.php';
