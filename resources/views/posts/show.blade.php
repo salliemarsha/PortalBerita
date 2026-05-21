@@ -8,9 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
     <style>
         :root {
             --bg: #f8f9fb;
@@ -266,16 +264,16 @@
         .article-body {
             font-family: 'Lora', Georgia, serif;
             font-size: 1.075rem;
-            line-height: 1.85;
+            line-height: 1.65;
             color: var(--ink-700);
         }
 
         .article-body p {
-            margin-bottom: 1.6em;
+            margin-bottom: 1.6em !important;
         }
 
         .article-body p:last-child {
-            margin-bottom: 0;
+            margin-bottom: 0 !important;
         }
 
         .article-body h2 {
@@ -314,7 +312,7 @@
         .article-body-plain {
             font-family: 'Lora', Georgia, serif;
             font-size: 1.075rem;
-            line-height: 1.85;
+            line-height: 1.65;
             color: var(--ink-700);
             white-space: pre-wrap;
             word-break: break-word;
@@ -422,10 +420,8 @@
             <nav class="navbar">
                 <a href="{{ route('home') }}" class="navbar-brand">
                     <div class="brand-icon">
-                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                         </svg>
                     </div>
                     <span class="brand-name">Portal Berita</span>
@@ -440,10 +436,8 @@
 
                 <div class="article-nav">
                     <a href="{{ route('home') }}" class="back-btn">
-                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                         </svg>
                         Kembali ke Beranda
                     </a>
@@ -458,10 +452,8 @@
 
                     <div class="author-bar">
                         <div class="author-avatar">
-                            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                             </svg>
                         </div>
                         <div class="author-info">
@@ -480,12 +472,11 @@
                         <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" loading="eager" />
                         <div class="article-hero-overlay"></div>
                     </figure>
-                @else
                     <div class="article-divider"></div>
                 @endif
 
-                <div class="article-body">
-                    {!! $post->body !!}
+                <div class="article-body-plain" style="margin-bottom: 2rem;">
+                    {!! nl2br(e($post->body)) !!}
                 </div>
 
                 <footer class="article-footer">
@@ -493,10 +484,8 @@
                         Terima kasih telah membaca artikel ini.
                     </span>
                     <a href="{{ route('home') }}" class="back-btn">
-                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                         </svg>
                         Berita lainnya
                     </a>
@@ -504,48 +493,42 @@
 
             </div>
         </div>
-        <section class="comments-section"
-            style="margin-top: 48px; border-top: 1px solid var(--border); padding-top: 32px;">
-            <h3 style="margin-bottom: 24px;">Komentar ({{ $post->comments->count() }})</h3>
+        <div class="container">
+            <div class="article-inner">
+                <section class="comments-section" style="margin-top: 48px; border-top: 1px solid var(--border); padding-top: 32px;">
+                    <h3 style="margin-bottom: 24px;">Komentar ({{ $post->comments->count() }})</h3>
 
-            @auth
-                <form action="{{ route('comments.store', $post->id) }}" method="POST"
-                    style="margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px;">
-                    @csrf
-                    <textarea name="body" rows="3" placeholder="Tulis opini atau komentar kamu di sini..." required
-                        style="width: 100%; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); font-family: inherit; resize: none;"></textarea>
+                    @auth
+                        <form action="{{ route('comments.store', $post->id) }}" method="POST" style="margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px;">
+                            @csrf
+                            <textarea name="body" rows="3" placeholder="Tulis opini atau komentar kamu di sini..." required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; resize: none;"></textarea>
 
-                    <button type="submit" class="read-btn"
-                        style="padding: 10px 20px; font-size: 0.85rem; border: none; cursor: pointer;">
-                        Kirim Komentar
-                    </button>
-                </form>
-            @else
-                <div
-                    style="background: var(--border-soft); padding: 16px; border-radius: var(--radius-sm); text-align: center; margin-bottom: 32px;">
-                    <p style="font-size: 0.9rem;">Kamu harus <a href="{{ route('login') }}"
-                            style="color: var(--accent); font-weight: 600;">Log in</a> terlebih dahulu untuk memberikan
-                        komentar.</p>
-                </div>
-            @endauth
-
-            <div class="comments-list" style="display: flex; flex-direction: column; gap: 20px;">
-                @forelse($post->comments()->latest()->get() as $comment)
-                    <div class="comment-item"
-                        style="background: var(--surface); padding: 16px; border-radius: var(--radius-card); border: 1px solid var(--border);">
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.8rem;">
-                            <span style="font-weight: 600; color: var(--ink-900);">{{ $comment->user->name }}</span>
-                            <span style="color: var(--ink-300);">{{ $comment->created_at->diffForHumans() }}</span>
+                            <button type="submit" class="back-btn" style="align-self: flex-start; cursor: pointer;">
+                                Kirim Komentar
+                            </button>
+                        </form>
+                    @else
+                        <div style="background: var(--border-soft); padding: 16px; border-radius: 6px; text-align: center; margin-bottom: 32px;">
+                            <p style="font-size: 0.9rem;">Kamu harus <a href="{{ route('login') }}" style="color: var(--accent); font-weight: 600;">Log in</a> terlebih dahulu untuk memberikan komentar.</p>
                         </div>
-                        <p style="font-size: 0.9rem; line-height: 1.6; color: var(--ink-700);">{{ $comment->body }}</p>
+                    @endauth
+
+                    <div class="comments-list" style="display: flex; flex-direction: column; gap: 20px;">
+                        @forelse($post->comments()->latest()->get() as $comment)
+                            <div class="comment-item" style="background: var(--surface); padding: 16px; border-radius: 8px; border: 1px solid var(--border);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.8rem;">
+                                    <span style="font-weight: 600; color: var(--ink-900);">{{ $comment->user->name }}</span>
+                                    <span style="color: var(--ink-300);">{{ $comment->created_at->diffForHumans() }}</span>
+                                </div>
+                                <p style="font-size: 0.9rem; line-height: 1.6; color: var(--ink-700);">{{ $comment->body }}</p>
+                            </div>
+                        @empty
+                            <p style="color: var(--ink-300); font-size: 0.9rem; text-align: center; padding: 20px 0;">Belum ada komentar. Jadilah yang pertama berkomentar!</p>
+                        @endforelse
                     </div>
-                @empty
-                    <p style="color: var(--ink-300); font-size: 0.9rem; text-align: center; padding: 20px 0;">Belum ada
-                        komentar. Jadilah yang pertama berkomentar!</p>
-                @endforelse
+                </section>
             </div>
-        </section>
+        </div>
     </main>
 
     <footer class="site-footer">
