@@ -8,31 +8,24 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
     <style>
         :root {
             --bg: #f8f9fb;
             --surface: #ffffff;
             --border: #e4e8ef;
             --border-soft: #eef0f5;
-
             --ink-900: #1e2535;
             --ink-700: #3d4a63;
             --ink-500: #6b7794;
             --ink-300: #9aa3b8;
-
             --accent: #4a69bd;
             --accent-soft: #eef1fa;
             --accent-mid: #7b96d4;
-
             --tag-bg: #eef1fa;
             --tag-text: #3d5a9e;
-
             --shadow-card: 0 2px 12px rgba(74, 105, 189, 0.07);
             --shadow-hover: 0 8px 32px rgba(74, 105, 189, 0.14);
-
             --radius-card: 16px;
             --radius-sm: 8px;
         }
@@ -69,6 +62,7 @@
         img {
             display: block;
             width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
@@ -154,7 +148,7 @@
 
         .featured-card {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 55fr 45fr;
             gap: 0;
             background: var(--surface);
             border-radius: var(--radius-card);
@@ -162,6 +156,8 @@
             overflow: hidden;
             box-shadow: var(--shadow-card);
             transition: box-shadow 0.35s ease, transform 0.35s ease;
+            align-items: stretch;
+            min-height: 380px;
         }
 
         .featured-card:hover {
@@ -172,13 +168,14 @@
         .featured-image-wrap {
             position: relative;
             overflow: hidden;
-            height: 420px;
+            height: 100%;
         }
 
         .featured-image-wrap img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
             transition: transform 0.55s ease;
         }
 
@@ -194,11 +191,11 @@
         }
 
         .featured-content {
-            padding: 44px 48px;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 20px;
+            gap: 16px;
         }
 
         .featured-category {
@@ -215,15 +212,19 @@
         }
 
         .featured-title {
-            font-size: 2rem;
-            line-height: 1.18;
+            font-size: 1.8rem;
+            line-height: 1.2;
             color: var(--ink-900);
             letter-spacing: -0.02em;
         }
 
+        .featured-title a:hover {
+            color: var(--accent);
+        }
+
         .featured-excerpt {
             font-size: 0.95rem;
-            line-height: 1.75;
+            line-height: 1.6;
             color: var(--ink-500);
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -234,7 +235,7 @@
         .featured-meta {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             font-size: 0.8rem;
             color: var(--ink-300);
         }
@@ -419,67 +420,35 @@
             color: var(--ink-700);
         }
 
-        .card-read-link {
-            font-size: 0.775rem;
-            font-weight: 600;
-            color: var(--accent);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: gap 0.2s;
-        }
-
-        .card-read-link:hover {
-            gap: 7px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 96px 24px;
-        }
-
-        .empty-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 20px;
-            background: var(--accent-soft);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-        }
-
-        .empty-state h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-        }
-
-        .empty-state p {
-            color: var(--ink-300);
-            font-size: 0.9rem;
-        }
-
         .site-footer {
             background: var(--surface);
             border-top: 1px solid var(--border);
-            padding: 32px 0;
+            padding: 24px 0;
+            margin-top: auto;
         }
 
         .footer-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-
-        .footer-copy {
-            font-size: 0.8rem;
-            color: var(--ink-300);
+            font-size: 0.85rem;
+            color: var(--ink-500);
         }
 
         .footer-brand {
             font-family: 'DM Serif Display', serif;
-            font-size: 1rem;
-            color: var(--ink-700);
+            color: var(--ink-900);
+            font-size: 1.1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 0;
+            color: var(--ink-500);
+        }
+
+        .empty-icon {
+            margin-bottom: 16px;
         }
 
         @media (max-width: 1024px) {
@@ -498,7 +467,7 @@
             }
 
             .featured-content {
-                padding: 28px 28px;
+                padding: 28px;
             }
 
             .featured-title {
@@ -543,12 +512,10 @@
     <header class="site-header">
         <div class="container">
             <nav class="navbar">
-                <a href="{{ url('/') }}" class="navbar-brand">
+                <a href="{{ route('home') }}" class="navbar-brand">
                     <div class="brand-icon">
-                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                         </svg>
                     </div>
                     <span class="brand-name">Portal Berita</span>
@@ -560,16 +527,12 @@
                     @if (Route::has('login'))
                         <div class="auth-nav" style="display: flex; gap: 10px; align-items: center;">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="read-btn"
-                                    style="padding: 8px 16px; font-size: 0.8rem; box-shadow: none;">Dashboard</a>
+                                <a href="{{ route('dashboard') }}" class="read-btn" style="padding: 8px 16px; font-size: 0.8rem; box-shadow: none;">Dashboard</a>
                             @else
-                                <a href="{{ route('login') }}" class="read-btn"
-                                    style="padding: 8px 16px; font-size: 0.8rem; box-shadow: none; background: transparent; color: var(--ink-700); border: 1px solid var(--border);">Log
-                                    in</a>
+                                <a href="{{ route('login') }}" class="read-btn" style="padding: 8px 16px; font-size: 0.8rem; box-shadow: none; background: transparent; color: var(--ink-700); border: 1px solid var(--border);">Log in</a>
 
                                 @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="read-btn"
-                                        style="padding: 8px 16px; font-size: 0.8rem; box-shadow: none;">Sign in</a>
+                                    <a href="{{ route('register') }}" class="read-btn" style="padding: 8px 16px; font-size: 0.8rem; box-shadow: none;">Sign in</a>
                                 @endif
                             @endauth
                         </div>
@@ -591,17 +554,14 @@
 
                     @php $featured = $posts->first(); @endphp
 
-                    <a href="{{ route('posts.show_public', $featured->slug) }}" class="featured-card" style="display:grid;">
+                    <div class="featured-card">
                         <div class="featured-image-wrap">
                             @if($featured->image)
-                                <img src="{{ asset('storage/' . $featured->image) }}" alt="{{ $featured->title }}"
-                                    loading="eager" />
+                                <img src="{{ asset('storage/' . $featured->image) }}" alt="{{ $featured->title }}" loading="eager" />
                             @else
-                                <div class="card-image-placeholder" style="height:100%;">
-                                    <svg width="56" height="56" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                        stroke-width="1.5">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 21h18M3 7.5h18M3 3.75h18" />
+                                <div class="card-image-placeholder">
+                                    <svg width="56" height="56" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 21h18M3 7.5h18M3 3.75h18" />
                                     </svg>
                                 </div>
                             @endif
@@ -613,7 +573,11 @@
                                 <span class="featured-category">{{ $featured->category->name }}</span>
                             @endif
 
-                            <h2 class="featured-title">{{ $featured->title }}</h2>
+                            <h2 class="featured-title">
+                                <a href="{{ route('posts.show', $featured->slug) }}">
+                                    {{ $featured->title }}
+                                </a>
+                            </h2>
 
                             <p class="featured-excerpt">
                                 {{ Str::limit(strip_tags($featured->body), 160) }}
@@ -627,16 +591,14 @@
                                 <span>{{ $featured->created_at->diffForHumans() }}</span>
                             </div>
 
-                            <span class="read-btn">
+                            <a href="{{ route('posts.show', $featured->slug) }}" class="read-btn">
                                 Baca Selengkapnya
-                                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                    stroke-width="2.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                                 </svg>
-                            </span>
+                            </a>
                         </div>
-                    </a>
+                    </div>
                 </section>
 
                 @if($posts->count() > 1)
@@ -649,17 +611,14 @@
                         <div class="posts-grid">
                             @foreach($posts->skip(1) as $post)
                                 <article class="post-card">
-                                    <a href="{{ route('posts.show_public', $post->slug) }}">
+                                    <a href="{{ route('posts.show', $post->slug) }}">
                                         <div class="card-image-wrap">
                                             @if($post->image)
-                                                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}"
-                                                    loading="lazy" />
+                                                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" loading="lazy" />
                                             @else
                                                 <div class="card-image-placeholder">
-                                                    <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                        stroke-width="1.5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909" />
+                                                    <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909" />
                                                     </svg>
                                                 </div>
                                             @endif
@@ -672,7 +631,7 @@
                                         @endif
 
                                         <h3 class="card-title">
-                                            <a href="{{ route('posts.show_public', $post->slug) }}">{{ $post->title }}</a>
+                                            <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a>
                                         </h3>
 
                                         @if($post->body)
@@ -688,13 +647,8 @@
                                             @endif
                                             <span>{{ $post->created_at->diffForHumans() }}</span>
                                         </div>
-                                        <a href="{{ route('posts.show_public', $post->slug) }}" class="card-read-link">
-                                            Baca
-                                            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                stroke-width="2.5">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                                            </svg>
+                                        <a href="{{ route('posts.show', $post->slug) }}" class="read-btn" style="text-decoration: none; padding: 8px 16px; font-size: 0.8rem; box-shadow: none;">
+                                            Baca Selengkapnya
                                         </a>
                                     </div>
                                 </article>
@@ -708,8 +662,7 @@
                 <div class="empty-state">
                     <div class="empty-icon">
                         <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="#4a69bd" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
                         </svg>
                     </div>
                     <h3>Belum Ada Berita</h3>

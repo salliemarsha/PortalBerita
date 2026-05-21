@@ -8,17 +8,15 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Controllers\CommentController;
 
-Route::middleware(['auth', IsAdmin::class])->group(function () {
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
+
+Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
-
-Route::get('/', [WelcomeController::class, 'index'])->name('posts.show_public');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
