@@ -1,16 +1,13 @@
 <?php
 
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WelcomeController; 
-use App\Http\Middleware\IsAdmin;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
-
-Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
@@ -23,8 +20,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('categories', CategoryController::class);
-    Route::resource('posts', PostController::class);
+    Route::resource('posts', PostController::class)->except(['show']);
     Route::post('/posts/{postId}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('/post/{post}/like', [PostController::class, 'like'])->name('post.like');
+    Route::post('/post/{post}/favorite', [PostController::class, 'favorite'])->name('post.favorite');
 });
+
+Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
 
 require __DIR__.'/auth.php';
