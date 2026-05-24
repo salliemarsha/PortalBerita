@@ -22,8 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('posts', PostController::class)->except(['show']);
     Route::post('/posts/{postId}/comments', [CommentController::class, 'store'])->name('comments.store');
-    Route::post('/post/{post}/like', [PostController::class, 'like'])->name('post.like');
-    Route::post('/post/{post}/favorite', [PostController::class, 'favorite'])->name('post.favorite');
+    Route::post('/post/{id}/like', [PostController::class, 'like'])->name('post.like');
+    Route::post('/post/{id}/favorite', [PostController::class, 'favorite'])->name('post.favorite');
 });
 
 Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');

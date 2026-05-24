@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with(['user', 'category'])->latest()->get();
+        $posts = Post::with(['user', 'category'])->latest()->paginate(10);
 
         return view('posts.index', compact('posts'));
     }
@@ -102,5 +102,33 @@ class PostController extends Controller
         $post = Post::where('slug', $slug)->firstOrFail();
 
         return view('posts.show', compact('post'));
+    }
+
+    public function like($id)
+    {
+        $post = Post::findOrFail($id);
+        $user = auth()->user();
+
+        if ($post->isLikedBy($user)) {
+            $post->likes()->where('user_id', $user->id)->delete();
+        } else {
+            $post->likes()->create(['user_id' => $user->id]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function favorite($id)
+    {
+        $post = Post::findOrFail($id);
+        $user = auth()->user();
+
+        if ($post->isFavoritedBy($user)) {
+            $post->favorites()->where('user_id', $user->id)->delete();
+        } else {
+            $post->favorites()->create(['user_id' => $user->id]);
+        }
+
+        return redirect()->back();
     }
 }
