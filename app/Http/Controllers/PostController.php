@@ -68,7 +68,12 @@ class PostController extends Controller
 
         $imagePath = $post->image;
 
-        if ($request->hasFile('image')) {
+        if ($request->input('delete_image') == 1) {
+            if ($post->image && Storage::disk('public')->exists($post->image)) {
+                Storage::disk('public')->delete($post->image);
+            }
+            $imagePath = null;
+        } elseif ($request->hasFile('image')) {
             if ($post->image && Storage::disk('public')->exists($post->image)) {
                 Storage::disk('public')->delete($post->image);
             }

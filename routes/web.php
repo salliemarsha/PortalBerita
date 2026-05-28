@@ -4,11 +4,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 // Rute Publik
-Route::get('/', [PostController::class, 'index'])->name('home');
-Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
+Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show_public');
 
 // Rute yang memerlukan Login
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -16,7 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::resource('posts', PostController::class);
+    Route::resource('posts', PostController::class)->except(['show']);
     Route::resource('categories', CategoryController::class);
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

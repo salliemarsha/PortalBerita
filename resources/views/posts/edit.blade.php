@@ -1021,14 +1021,14 @@
                         <div class="panel-bd">
                             <div class="img-zone" id="imgZone">
                                 <input type="file" name="image" id="imageInput" accept="image/jpeg,image/png,image/webp,image/gif" onchange="handleImageChange(this)" />
-                                <div class="img-placeholder" id="imgPlaceholder" style="{{ $post->image ? 'display:none;' : '' }}">
+                                <div class="img-placeholder" id="imgPlaceholder" style="{{ ($post->image && old('delete_image', '0') !== '1') ? 'display:none;' : '' }}">
                                     <div class="img-upload-icon">
                                         <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
                                     </div>
                                     <p class="img-upload-text">Klik atau seret gambar</p>
                                     <p class="img-upload-hint">JPG, PNG, WebP · Maks 2 MB</p>
                                 </div>
-                                <div class="img-preview-wrap" id="imgPreviewWrap" style="{{ $post->image ? '' : 'display:none;' }}">
+                                <div class="img-preview-wrap" id="imgPreviewWrap" style="{{ ($post->image && old('delete_image', '0') !== '1') ? '' : 'display:none;' }}">
                                     <img id="imgPreview" src="{{ $post->image ? asset('storage/' . $post->image) : '' }}" alt="Preview Gambar" />
                                     <div class="img-preview-bar">
                                         <button type="button" class="img-action-btn change" onclick="triggerFileInput()">Ganti</button>
@@ -1036,6 +1036,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="delete_image" value="{{ old('delete_image', '0') }}" id="deleteImageInput" />
                             @if($post->image)
                                 <input type="hidden" name="existing_image" value="{{ $post->image }}" id="existingImage" />
                             @endif
@@ -1232,6 +1233,8 @@
                 document.getElementById('imgPreviewWrap').style.display = 'block';
             };
             reader.readAsDataURL(file);
+            const deleteInput = document.getElementById('deleteImageInput');
+            if (deleteInput) deleteInput.value = '0';
             markDirty();
         }
     }
@@ -1245,6 +1248,8 @@
         document.getElementById('imageInput').value = '';
         const existing = document.getElementById('existingImage');
         if (existing) existing.value = '';
+        const deleteInput = document.getElementById('deleteImageInput');
+        if (deleteInput) deleteInput.value = '1';
         markDirty();
     }
 

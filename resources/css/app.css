@@ -2,3 +2,209 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design Tokens & Custom CSS Variable Declarations ────────────── */
+:root {
+    --bg:          #f8f9fb;
+    --surface:     #ffffff;
+    --border:      #e4e8ef;
+    --border-soft: #eef0f5;
+
+    --ink-900:     #1e2535;
+    --ink-700:     #3d4a63;
+    --ink-500:     #6b7794;
+    --ink-300:     #9aa3b8;
+
+    --accent:      #4a69bd;   /* Slate blue - premium, solid brand feel */
+    --accent-hover: #3b559c;
+    --accent-soft: #eef1fa;
+    --accent-mid:  #7b96d4;
+
+    --tag-bg:      #eef1fa;
+    --tag-text:    #3d5a9e;
+
+    --danger:      #e74c3c;
+    --danger-hover: #c0392b;
+    --danger-soft: #fce8e6;
+
+    --shadow-card: 0 4px 18px rgba(74, 105, 189, 0.05);
+    --shadow-hover: 0 12px 32px rgba(74, 105, 189, 0.12);
+
+    --radius-card: 16px;
+    --radius-sm:   8px;
+    --radius-input: 10px;
+}
+
+/* ─── Global Base Font & Styling Rules ────────────────────────────── */
+body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    background-color: var(--bg) !important;
+    color: var(--ink-700);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif-brand {
+    font-family: 'DM Serif Display', Georgia, serif !important;
+    color: var(--ink-900);
+}
+
+/* Custom selection styling */
+::selection {
+    background-color: var(--accent-soft);
+    color: var(--tag-text);
+}
+
+/* ─── Modern SaaS UI Components ───────────────────────────────────── */
+
+/* Beautiful standard card styling */
+.saas-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.saas-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+/* Form input containers and labels */
+.saas-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-700);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+}
+
+/* Beautiful responsive input elements */
+.saas-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.925rem;
+    font-family: 'DM Sans', sans-serif !important;
+    color: var(--ink-900);
+    background-color: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-input);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.saas-input:focus {
+    border-color: var(--accent) !important;
+    background-color: var(--surface);
+    box-shadow: 0 0 0 4px rgba(74, 105, 189, 0.15) !important;
+    outline: none;
+}
+
+.saas-input::placeholder {
+    color: var(--ink-300);
+    font-weight: 400;
+}
+
+/* Specialized modern buttons */
+.saas-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 24px;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ffffff !important;
+    background-color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 14px rgba(74, 105, 189, 0.25);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.saas-btn-primary:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(74, 105, 189, 0.35);
+}
+
+.saas-btn-primary:active {
+    transform: translateY(0);
+}
+
+.saas-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 24px;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink-700) !important;
+    background-color: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.saas-btn-secondary:hover {
+    background-color: var(--bg);
+    border-color: var(--ink-300);
+    color: var(--ink-900) !important;
+    transform: translateY(-1px);
+}
+
+.saas-btn-secondary:active {
+    transform: translateY(0);
+}
+
+.saas-btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 24px;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ffffff !important;
+    background-color: var(--danger);
+    border: 1px solid var(--danger);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 14px rgba(231, 76, 60, 0.2);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.saas-btn-danger:hover {
+    background-color: var(--danger-hover);
+    border-color: var(--danger-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+}
+
+.saas-btn-danger:active {
+    transform: translateY(0);
+}
+
+/* Beautiful helper messages and error grids */
+.saas-help-text {
+    font-size: 0.8rem;
+    color: var(--ink-500);
+    line-height: 1.5;
+}
+
+.saas-error-text {
+    font-size: 0.775rem;
+    font-weight: 500;
+    color: var(--danger);
+    margin-top: 6px;
+}

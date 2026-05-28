@@ -1107,7 +1107,7 @@
                                                 </div>
                                             @endif
                                             <div class="post-info">
-                                                <a href="{{ route('posts.show', $post->slug) }}" target="_blank"
+                                                <a href="{{ route('posts.show_public', $post->slug) }}" target="_blank"
                                                     class="post-title-link">{{ $post->title }}</a>
                                                 @if($post->user)
                                                     <span class="post-author">oleh {{ $post->user->name }}</span>
