@@ -3,97 +3,133 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Admin — Portal Berita</title>
+    <title>Dashboard — Admin Panel</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet" />
     <style>
+        /* ════════════════════════════════════════════════════════════
+           DESIGN TOKENS
+        ════════════════════════════════════════════════════════════ */
         :root {
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --surface-2: #f1f5f9;
-            --border: #e2e8f0;
-            --border-soft: #f1f5f9;
-            
-            --sidebar-bg: #0f172a;
-            --sidebar-ink: #94a3b8;
+            /* Core palette */
+            --bg:            #f4f6fa;
+            --surface:       #ffffff;
+            --surface-2:     #f9fafc;
+            --border:        #e8eaf2;
+            --border-soft:   #f0f2f8;
+
+            /* Ink */
+            --ink-900:       #1a1f36;
+            --ink-700:       #3d4461;
+            --ink-500:       #6b7299;
+            --ink-300:       #a0a8c3;
+            --ink-100:       #e8eaf2;
+
+            /* Accent — Indigo */
+            --accent:        #4f46e5;
+            --accent-hover:  #4338ca;
+            --accent-light:  #eef2ff;
+            --accent-mid:    #818cf8;
+            --accent-glow:   rgba(79,70,229,0.15);
+
+            /* Sidebar */
+            --sidebar-bg:    #1e2140;
+            --sidebar-w:     260px;
+            --sidebar-ink:   #a0a8c3;
             --sidebar-ink-h: #ffffff;
-            --sidebar-hover: rgba(255,255,255,0.04);
-            --sidebar-active: #4f46e5;
-            
-            --accent: #4f46e5;
-            --accent-hover: #4338ca;
-            --accent-mid: #6366f1;
-            --accent-light: #eef2ff;
-            --accent-glow: rgba(79,70,229,0.08);
+            --sidebar-hover: rgba(255,255,255,0.06);
+            --sidebar-active:rgba(79,70,229,0.18);
 
-            --ink-300: #64748b;
-            --ink-500: #475569;
-            --ink-700: #334155;
-            --ink-900: #0f172a;
-            
-            --radius-xs: 6px;
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            
-            --sidebar-w: 260px;
-            --topbar-h: 70px;
+            /* Topbar */
+            --topbar-h:      64px;
 
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+            /* Cards */
+            --radius-lg:     16px;
+            --radius-md:     12px;
+            --radius-sm:     8px;
+            --radius-xs:     6px;
+
+            --shadow-sm:     0 1px 4px rgba(26,31,54,0.06);
+            --shadow-md:     0 4px 20px rgba(26,31,54,0.08);
+            --shadow-lg:     0 8px 40px rgba(79,70,229,0.12);
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        /* ════════════════════════════════════════════════════════════
+           RESET & BASE
+        ════════════════════════════════════════════════════════════ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { height: 100%; }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
+            background: var(--bg);
             color: var(--ink-700);
-            display: flex;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
         }
 
-        /* SIDEBAR BASE STYLE */
+        a { text-decoration: none; color: inherit; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+        /* ════════════════════════════════════════════════════════════
+           SIDEBAR
+        ════════════════════════════════════════════════════════════ */
         .sidebar {
             width: var(--sidebar-w);
+            min-height: 100vh;
             background: var(--sidebar-bg);
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
             position: fixed;
             top: 0;
-            bottom: 0;
             left: 0;
+            bottom: 0;
             z-index: 200;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+            overflow: hidden;
         }
 
+        /* Subtle grid texture on sidebar */
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 80% 20%, rgba(79,70,229,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(129,140,248,0.07) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* ── Brand ── */
         .sidebar-brand {
-            height: var(--topbar-h);
             display: flex;
             align-items: center;
-            padding: 0 24px;
             gap: 12px;
+            padding: 0 24px;
+            height: var(--topbar-h);
             border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+            position: relative;
         }
 
         .brand-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-sm);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             background: var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            box-shadow: 0 4px 12px rgba(79,70,229,0.4);
+            flex-shrink: 0;
         }
+
+        .brand-logo svg { color: #fff; }
 
         .brand-text {
             display: flex;
@@ -104,23 +140,23 @@
             font-size: 0.95rem;
             font-weight: 700;
             color: #fff;
+            letter-spacing: -0.01em;
             line-height: 1.2;
         }
 
         .brand-sub {
-            font-size: 0.72rem;
-            color: var(--sidebar-ink);
-            font-weight: 500;
+            font-size: 0.68rem;
+            color: rgba(160,168,195,0.7);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
 
+        /* ── Nav ── */
         .sidebar-nav {
             flex: 1;
             padding: 20px 0;
             overflow-y: auto;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
         }
 
         .nav-section-label {
@@ -142,7 +178,6 @@
             font-size: 0.85rem;
             font-weight: 500;
             color: var(--sidebar-ink);
-            text-decoration: none;
             transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
             position: relative;
         }
@@ -155,7 +190,7 @@
 
         .nav-link.active {
             background: var(--sidebar-active);
-            color: #ffffff;
+            color: #c7d2fe;
         }
 
         .nav-link.active::before {
@@ -166,7 +201,7 @@
             transform: translateY(-50%);
             width: 3px;
             height: 20px;
-            background: #ffffff;
+            background: var(--accent-mid);
             border-radius: 0 3px 3px 0;
         }
 
@@ -181,6 +216,7 @@
         .nav-link:hover .nav-icon,
         .nav-link.active .nav-icon { opacity: 1; }
 
+        /* ── Sidebar Footer ── */
         .sidebar-footer {
             padding: 16px 12px;
             border-top: 1px solid rgba(255,255,255,0.06);
@@ -194,8 +230,6 @@
             gap: 12px;
             width: 100%;
             padding: 10px 20px;
-            background: transparent;
-            border: none;
             border-radius: var(--radius-sm);
             font-size: 0.85rem;
             font-weight: 500;
@@ -209,16 +243,18 @@
             color: #fca5a5;
         }
 
-        /* MAIN LAYOUT WRAPPER */
+        /* ════════════════════════════════════════════════════════════
+           MAIN CONTENT
+        ════════════════════════════════════════════════════════════ */
         .main-wrap {
             margin-left: var(--sidebar-w);
             flex: 1;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            min-width: 0;
         }
 
+        /* ── Topbar ── */
         .topbar {
             height: var(--topbar-h);
             background: var(--surface);
@@ -276,7 +312,6 @@
             border-radius: 100px;
             border: 1px solid var(--border);
             background: var(--surface-2);
-            text-decoration: none;
             transition: border-color 0.2s, background 0.2s;
         }
 
@@ -306,12 +341,15 @@
             text-overflow: ellipsis;
         }
 
+        /* ── Page Content ── */
         .page-content {
             flex: 1;
             padding: 32px;
         }
 
-        /* WELCOME BANNER */
+        /* ════════════════════════════════════════════════════════════
+           WELCOME BANNER
+        ════════════════════════════════════════════════════════════ */
         .welcome-banner {
             background: var(--sidebar-bg);
             border-radius: var(--radius-lg);
@@ -332,6 +370,7 @@
             pointer-events: none;
         }
 
+        /* Decorative circles */
         .welcome-banner::after {
             content: '';
             position: absolute;
@@ -379,7 +418,9 @@
             line-height: 1.6;
         }
 
-        /* STATS GRID */
+        /* ════════════════════════════════════════════════════════════
+           STATS CARDS
+        ════════════════════════════════════════════════════════════ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -422,6 +463,7 @@
 
         .stat-card:hover::after { opacity: 1; }
 
+        /* Card color accents */
         .stat-card.card-blue::after  { background: linear-gradient(90deg, #4f46e5, #818cf8); }
         .stat-card.card-teal::after  { background: linear-gradient(90deg, #0d9488, #2dd4bf); }
         .stat-card.card-amber::after { background: linear-gradient(90deg, #d97706, #fbbf24); }
@@ -463,7 +505,9 @@
         .icon-teal  { background: #f0fdfa; color: #0d9488; }
         .icon-amber { background: #fffbeb; color: #d97706; }
 
-        /* QUICK ACTIONS */
+        /* ════════════════════════════════════════════════════════════
+           QUICK ACTIONS
+        ════════════════════════════════════════════════════════════ */
         .section-card {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -516,7 +560,6 @@
             border-radius: var(--radius-md);
             border: 1px solid var(--border);
             background: var(--surface-2);
-            text-decoration: none;
             transition: all 0.22s ease;
             cursor: pointer;
         }
@@ -563,6 +606,9 @@
             color: var(--ink-300);
         }
 
+        /* ════════════════════════════════════════════════════════════
+           BUTTONS
+        ════════════════════════════════════════════════════════════ */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -572,10 +618,21 @@
             font-size: 0.82rem;
             font-weight: 600;
             letter-spacing: 0.01em;
-            text-decoration: none;
             transition: all 0.2s ease;
             cursor: pointer;
             white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(79,70,229,0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 4px 16px rgba(79,70,229,0.4);
+            transform: translateY(-1px);
         }
 
         .btn-ghost {
@@ -590,6 +647,9 @@
             color: var(--accent);
         }
 
+        /* ════════════════════════════════════════════════════════════
+           FOOTER
+        ════════════════════════════════════════════════════════════ */
         .page-footer {
             padding: 20px 32px;
             border-top: 1px solid var(--border);
@@ -599,9 +659,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: auto;
         }
 
+        /* ════════════════════════════════════════════════════════════
+           MOBILE OVERLAY
+        ════════════════════════════════════════════════════════════ */
         .sidebar-overlay {
             display: none;
             position: fixed;
@@ -611,7 +673,9 @@
             backdrop-filter: blur(2px);
         }
 
-        /* MEDIA QUERIES (FIXED & TIDY) */
+        /* ════════════════════════════════════════════════════════════
+           RESPONSIVE
+        ════════════════════════════════════════════════════════════ */
         @media (max-width: 1024px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
@@ -638,22 +702,26 @@
             .user-name { display: none; }
         }
 
-        /* ANIMATIONS */
+        /* ════════════════════════════════════════════════════════════
+           ANIMATIONS
+        ════════════════════════════════════════════════════════════ */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(16px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        .welcome-banner          { animation: fadeUp 0.4s ease both; }
+        .welcome-banner  { animation: fadeUp 0.4s ease both; }
         .stat-card:nth-child(1) { animation: fadeUp 0.4s 0.08s ease both; }
         .stat-card:nth-child(2) { animation: fadeUp 0.4s 0.16s ease both; }
         .stat-card:nth-child(3) { animation: fadeUp 0.4s 0.24s ease both; }
-        .section-card            { animation: fadeUp 0.4s 0.32s ease both; }
+        .section-card    { animation: fadeUp 0.4s 0.32s ease both; }
     </style>
 </head>
 <body>
 
+{{-- ═══════════════════════════════════════════════ SIDEBAR ═══════════════ --}}
 <aside class="sidebar" id="sidebar">
+    {{-- Brand --}}
     <div class="sidebar-brand">
         <div class="brand-logo">
             <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -666,8 +734,10 @@
         </div>
     </div>
 
+    {{-- Navigation --}}
     <nav class="sidebar-nav">
         <span class="nav-section-label">Menu Utama</span>
+
         <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -676,6 +746,7 @@
         </a>
 
         <span class="nav-section-label">Kelola Konten</span>
+
         <a href="{{ route('posts.index') }}" class="nav-link {{ request()->routeIs('posts.*') ? 'active' : '' }}">
             <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -691,6 +762,7 @@
         </a>
 
         <span class="nav-section-label">Akun</span>
+
         <a href="{{ route('profile.edit') }}" class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">
             <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
@@ -700,6 +772,7 @@
         </a>
     </nav>
 
+    {{-- Logout --}}
     <div class="sidebar-footer">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
@@ -713,10 +786,13 @@
     </div>
 </aside>
 
+{{-- Mobile Overlay --}}
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
+{{-- ═══════════════════════════════════════════════ MAIN WRAP ═════════════ --}}
 <div class="main-wrap">
 
+    {{-- ── Topbar ── --}}
     <header class="topbar">
         <div class="topbar-left">
             <button class="mobile-menu-btn" onclick="openSidebar()" aria-label="Buka menu">
@@ -748,8 +824,10 @@
         </div>
     </header>
 
+    {{-- ── Page Content ── --}}
     <main class="page-content">
 
+        {{-- ── Welcome Banner ── --}}
         <div class="welcome-banner">
             <div class="banner-deco-ring"></div>
             <div class="welcome-content">
@@ -759,7 +837,10 @@
             </div>
         </div>
 
+        {{-- ── Stats Cards ── --}}
         <div class="stats-grid">
+
+            {{-- Total Berita --}}
             <div class="stat-card card-blue">
                 <div class="stat-info">
                     <span class="stat-label">Total Berita</span>
@@ -773,6 +854,7 @@
                 </div>
             </div>
 
+            {{-- Total Kategori --}}
             <div class="stat-card card-teal">
                 <div class="stat-info">
                     <span class="stat-label">Total Kategori</span>
@@ -786,6 +868,7 @@
                 </div>
             </div>
 
+            {{-- Total Komentar --}}
             <div class="stat-card card-amber">
                 <div class="stat-info">
                     <span class="stat-label">Total Komentar</span>
@@ -798,8 +881,10 @@
                     </svg>
                 </div>
             </div>
+
         </div>
 
+        {{-- ── Quick Actions ── --}}
         <div class="section-card">
             <div class="section-card-header">
                 <div class="section-card-title">
@@ -813,6 +898,7 @@
             </div>
             <div class="section-card-body">
                 <div class="quick-actions-grid">
+
                     <a href="{{ route('posts.create') }}" class="action-card">
                         <div class="action-icon">
                             <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -860,18 +946,21 @@
                             <span class="action-desc">Buka tampilan publik portal</span>
                         </div>
                     </a>
+
                 </div>
             </div>
         </div>
 
     </main>
 
+    {{-- ── Footer ── --}}
     <footer class="page-footer">
         <span>&copy; {{ date('Y') }} Portal Berita — Admin Panel</span>
         <span>v1.0.0</span>
-    </footer >
+    </footer>
 </div>
 
+{{-- ═══════════════════════════════════════════════ JS ════════════════════ --}}
 <script>
     function openSidebar() {
         document.getElementById('sidebar').classList.add('open');
